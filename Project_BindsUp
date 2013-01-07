@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC -//IETF//DTD HTML 2.0//EN> 
+<html>
+<head>
+  
+</head>
+<body>
+<br>
+  <div style="text-align: center;"><h1>CHRISTMAS LIGHTS CHECK</h1> 
+<br>
+<h2>
+  <small>Lights ON at the moment:</small>
+  <span id="myelement">0</span>
+</h2>
+  
+
+  <center>
+     <table>
+<tr>
+  <td><p1 style="display: none"><img src="C03.png"></p1></td> 
+<td><p2 style="display: none"><img src="C01.png"></p2></td>
+  <td><p3 style="overflow: hidden"><img src="C04.png"></p3></td>
+</tr>
+    </table>
+    </center>
+  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://d23cj0cdvyoxg0.cloudfront.net/cosmjs-1.0.0.min.js"></script>
+<script>
+  
+  
+  
+// Make sure the document is ready to be handled
+$(document).ready(function ($) {
+  
+  
+cosm.setKey("VgMEyjLjLb37Hya5KXuquPXi-S2SAKxmQ2VodERueDNXND0g"); // cosm key
+var feedID = 85173, // Feed ID
+datastreamID1 = "Arduino1"; // Your datastream ID, from arduino
+datastreamID2 = "Arduino2"; // Your datastream ID, send to arduino
+selector = "#myelement"; // Your element on the page se above
+selector2 = "#myelement2"; // Your element on the page se above
+
+  
+// Get datastream data from Cosm
+  cosm.datastream.get(feedID, datastreamID1, function (datastream) {
+  $(selector).html(datastream["current_value"]); //Anonymous method that receives the datastream
+
+  
+// Uppdatera värdet i realtid
+  $(selector).cosm('live', { feed: feedID, datastream: datastreamID1 });
+             
+// The function associated with the subscribe method will be executed   
+// every time there is an update to the datastream  
+    cosm.datastream.subscribe( feedID, datastreamID1, function ( event , datastream_updated ) {  
+
+// Display the current value from the updated datastream  
+    $(selector).html( datastream_updated["current_value"] );  
+    });  
+    });
+
+
+  
+  $(document).ready(function() {
+            $("#ON").click(function() { //Button "ON" Change value of datastream to 1
+
+            cosm.datastream.update(feedID, datastreamID2, { "current_value": 1 }, function(){
+              $(selector2).html();       // Turns ON the light 
+              
+              $("p1").toggle(function(){   // Picture of a tree with lights on
+                $("p3").slideToggle();
+  });
+              
+                   });
+                   });
+                   });                        
+                   
+  
+  
+   $(document).ready(function() {
+            $("#OFF").click(function() { //Button "OFF" Change value of datastream to 2
+
+            cosm.datastream.update(feedID, datastreamID2, { "current_value": 2 }, function(){
+              $(selector2).html();        // Turnes the light OFF
+           
+              $("p2").toggle(function(){      // Shows a picture of a tree with lights OFF
+                $("p3").slideToggle();
+  });
+              
+              });
+              });
+               });
+  });
+           
+</script>
+
+     <center>
+     <table width="100" border="0">
+<tr>
+  <td><div><button id="ON">ON</button></div></td>        
+<td><div><button id="OFF">OFF</button></div></td>
+</tr>
+</table>
+    </center>
+    
+    
+</body>
+</html>
