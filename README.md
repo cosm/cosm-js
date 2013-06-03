@@ -1,5 +1,9 @@
-# cosmjs 1.0.2
+## This library has moved
 
-## Cosm Javascript Library
+Cosm is now Xively. This library can now be found at:
 
-Documentation at [cosm.github.com/cosm-js/](http://cosm.github.com/cosm-js/)
+http://xively.github.io/xively-js/
+
+(Source files: https://github.com/xively/xively-js)
+
+
